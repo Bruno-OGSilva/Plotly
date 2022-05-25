@@ -4,6 +4,7 @@ function init() {
 
   // Use the list of sample names to populate the select options
   d3.json("samples.json").then((data) => {
+
     var sampleNames = data.names;
 
     sampleNames.forEach((sample) => {
@@ -53,6 +54,9 @@ function buildMetadata(sample) {
   });
 }
 
+// DELIVERABLE 1 
+
+
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
   // 2. Use d3.json to load and retrieve the samples.json file 
@@ -65,18 +69,20 @@ function buildCharts(sample) {
     var result = resultArray[0];
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-    var ids = result.otu_ids;
+    var  ids = result.otu_ids;
     var labels = result.otu_labels.slice(0, 10).reverse();
-    var values = result.samp;e_values.slice(0, 10).reverse();
+    var values = result.sample_values.slice(0,10).reverse();
 
     var bubbleLabels = result.otu_labels;
-    var bubbleLabels = result.sample_values;
+    var bubbleValues = result.sample_values;
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
 
-    var yticks = ids.maps(sampleObj => "OTU" + sampleObj).slice(0,10).reverse();
+    var yticks = ids.map(sampleObj => "OTU " + sampleObj).slice(0,10).reverse();
+
+    console.log(yticks)
 
     // 8. Create the trace for the bar chart. 
     var barData = [{
@@ -84,16 +90,18 @@ function buildCharts(sample) {
       y: yticks,
       type: "bar",
       orientation: "h",
-      text: labels
-  }];
+      text: labels 
+    }];
     // 9. Create the layout for the bar chart. 
     var barLayout = {
      title: "Top 10 Bacteria Cultures Found"
     };
     // 10. Use Plotly to plot the data with the layout. 
-    Plotly.newPlot("bar", barData, barLayout)
+    Plotly.newPlot("bar", barData, barLayout);
 
-  
+
+// DELIVERABLE 2 
+
     // 1. Create the trace for the bubble chart.
     var bubbleData = [{
       x: ids,
@@ -118,6 +126,7 @@ function buildCharts(sample) {
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot("bubble", bubbleData, bubbleLayout)
 
+// DELIVERABLE 3 
 
     // 1. Create a variable that filters the metadata array for the object with the desired sample number.
     var metadata = data.metadata;
